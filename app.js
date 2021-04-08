@@ -21,17 +21,17 @@ var resourceRouter = require('./routes/resource');
 async function recreateDB() {
   // Delete everything
   await food.deleteMany();
-  let instance1 = new food({ foodname: "Indian Biryani", size: "large", cost: 500 });
+  let instance1 = new food({ foodtype: "Indian Biryani", size: "large", cost: 500 });
   instance1.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("First object saved")
   });
-  let instance2 = new food({ foodname: "American Burger", size: "Medium", cost: 150 });
+  let instance2 = new food({ foodtype: "American Burger", size: "Medium", cost: 150 });
   instance2.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("Second object saved")
   });
-  let instance3 = new food({ foodname: "Chinees Noodels", size: "small", cost: 100 });
+  let instance3 = new food({ foodtype: "Chinees Noodels", size: "small", cost: 100 });
   instance3.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("Third object saved")
@@ -76,8 +76,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
 
 
 //Get the default connection
