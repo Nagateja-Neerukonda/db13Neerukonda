@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  - let foods = [{foodCuisine:"Indian",calories:120,price:15},{foodCuisine:"Chinese",calories:300,price:11},{foodCuisine:"Mexican",calories:400,price:15}]
+    div(class="container-fluid")
+        dic(class="row align-items-start")
+            each item,index in foods 
+                div(class="col-sm-2" onclick=`buy(${index})`) Cuisine:#{item.foodCuisine}, calories:#{item.calories}, price:#{item.price}
+    script. 
+        function buy(index){
+            alert(`You purchased item ${index+1}`);
+        }
