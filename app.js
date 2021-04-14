@@ -3,11 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-const connectionString = 'mongodb+srv://Teja:Teja123@cluster0.shv4v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const connectionString = process.env.MONGO_CON
 mongoose = require('mongoose');
-mongoose.connect(connectionString,
-  { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,17 +22,29 @@ var resourceRouter = require('./routes/resource');
 async function recreateDB() {
   // Delete everything
   await food.deleteMany();
-  let instance1 = new food({ foodtype: "Indian Biryani", size: "large", cost: 500 });
+  let instance1 = new food({
+    foodtype: "Indian Biryani",
+    size: "large",
+    cost: 500
+  });
   instance1.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("First object saved")
   });
-  let instance2 = new food({ foodtype: "American Burger", size: "Medium", cost: 150 });
+  let instance2 = new food({
+    foodtype: "American Burger",
+    size: "Medium",
+    cost: 150
+  });
   instance2.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("Second object saved")
   });
-  let instance3 = new food({ foodtype: "Chinees Noodels", size: "small", cost: 100 });
+  let instance3 = new food({
+    foodtype: "Chinees Noodels",
+    size: "small",
+    cost: 100
+  });
   instance3.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("Third object saved")
@@ -39,7 +52,9 @@ async function recreateDB() {
 }
 
 let reseed = true;
-if (reseed) { recreateDB(); }
+if (reseed) {
+  recreateDB();
+}
 
 var app = express();
 
@@ -49,7 +64,9 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
