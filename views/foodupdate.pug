@@ -1,0 +1,46 @@
+extends layout
+
+block content
+
+  - let foodid = toShow._id
+  - let foodtype = toShow.foodtype
+  - let foodcost = toShow.cost
+  - let foodsize = toShow.size
+  
+
+  - let actionid = "/resource/foods/" + foodid
+  div(class="container")
+    div(class="col-md-12")
+      h2(class="text-primary")= title
+      label ID is  #{foodid}
+      div(class="col-md-4")
+      div.col-md-4
+        form(id='foodForm', action= actionid, method="PUT")
+            div.form-group
+                label(for='foodtype') Food type :
+                input#foodtype(type='text', name='foodtype', value= foodtype , class="form-control form-control-sm")
+            div.form-group
+                label(for='size') Food size :
+                input#size(type='text', name='size', value= foodsize , class="form-control form-control-sm")
+            div.form-group
+                label(for='cost') Food cost :
+                input#cost(type='number', name='cost', value= foodcost , class="form-control form-control-sm")
+            input(type="submit" class="btn btn-primary btn-sm" value="Update Food")
+
+  script.
+    document.forms['foodForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+      });
+    });
