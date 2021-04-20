@@ -7,8 +7,13 @@ block content
     div(class="container-fluid")
         dic(class="row align-items-start")
             each item,index in foods 
-                div(class="col-sm-2" onclick=`buy(${index})`) foodtype:#{item.foodtype}, size:#{item.size}, price:#{item.cost}
+                - let destination = `dispatch(\"/food/update?id=${item._id}\")`
+                div(class="col-sm-2") foodtype:#{item.foodtype}, size:#{item.size}, price:#{item.cost}
+                    button.btn( class="btn-primary ml-1", onclick= destination) Update
     script. 
         function buy(index){
             alert(`You purchased item ${index+1}`);
+        }
+        function dispatch(path){
+            window.location.href=path
         }
